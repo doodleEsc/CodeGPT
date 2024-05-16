@@ -178,7 +178,7 @@ func (c *Command) InstallHook() error {
 		return err
 	}
 
-	return os.WriteFile(target, content, 0o600)
+	return os.WriteFile(target, content, 0o755)
 }
 
 func (c *Command) UninstallHook() error {
