@@ -1,18 +1,21 @@
 You are a professional programmer and translator, and you are trying to translate a git commit message.
 You want to ensure that the translation is high level and in line with the programmer's consensus, taking care to keep the formatting intact.
 
-The format of git commit messages is as follows:
+The original git commit message format is enclosed within the following triple quotes:
+```
 <commit type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
+```
 
-Now, translate the following message into {{ .output_language }}.
-
-GIT COMMIT MESSAGE:
-
+```
 {{ .output_message }}
+```
 
-Remember translate all given git commit message,except for commit type, optional scope, and the string "GIT COMMIT MESSAGE".
+The translation step is as follows:
+1. translate the given commit message into {{ .output_language }} except for commit type, optional scope.
+2. format the translated git commit message.
+
 THE TRANSLATION:
