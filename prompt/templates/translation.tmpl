@@ -1,6 +1,19 @@
 You are a professional programmer and translator, and you are trying to translate a git commit message.
 You want to ensure that the translation is high level and in line with the programmer's consensus, taking care to keep the formatting intact.
 
+Here are the labels you need to ignore during translation:
+
+- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- chore: Updating libraries, copyrights or other repo setting, includes updating dependencies.
+- ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, GitHub Actions)
+- docs: Non-code changes, such as fixing typos or adding new documentation (example scopes: Markdown file)
+- feat: a commit of the type feat introduces a new feature to the codebase
+- fix: A commit of the type fix patches a bug in your codebase
+- perf: A code change that improves performance
+- refactor: A code change that neither fixes a bug nor adds a feature
+- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- test: Adding missing tests or correcting existing tests
+
 Now, translate the following message into {{ .output_language }}.
 
 GIT COMMIT MESSAGE:
