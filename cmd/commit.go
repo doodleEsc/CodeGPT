@@ -308,29 +308,15 @@ var commitCmd = &cobra.Command{
 			if err != nil {
 				return err
 			}
-			// <<<<<<< HEAD
-
-			// if change {
-			// 	m := initialPrompt(commitMessage)
-			// 	p := tea.NewProgram(m)
-			// 	if _, err := p.Run(); err != nil {
-			// 		return err
-			// 	}
-			// 	p.Wait()
-			// 	commitMessage = m.textarea.Value()
-			// }
-			// ||||||| parent of a55da55 (feat: add noConfirm flag to streamline commit process (#189))
-			// 			p.Wait()
-			// =======
 
 			if change {
-				p := tea.NewProgram(initialPrompt(commitMessage))
+				m := initialPrompt(commitMessage)
+				p := tea.NewProgram(m, tea.WithContext(cmd.Context()))
 				if _, err := p.Run(); err != nil {
 					return err
 				}
 				p.Wait()
 			}
-			// >>>>>>> a55da55 (feat: add noConfirm flag to streamline commit process (#189))
 		}
 
 		// git commit automatically
