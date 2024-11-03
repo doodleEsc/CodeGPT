@@ -5,7 +5,7 @@ go 1.21.0
 require (
 	github.com/appleboy/com v0.1.7
 	github.com/appleboy/graceful v1.1.1
-	github.com/charmbracelet/bubbles v0.19.0
+	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.1.0
 	github.com/erikgeiser/promptkit v0.9.0
 	github.com/fatih/color v1.17.0
