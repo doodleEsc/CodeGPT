@@ -11,7 +11,7 @@ require (
 	github.com/charmbracelet/bubbletea v1.2.1
 	github.com/erikgeiser/promptkit v0.9.0
 	github.com/fatih/color v1.18.0
-	github.com/google/generative-ai-go v0.18.0
+	github.com/google/generative-ai-go v0.19.0
 	github.com/joho/godotenv v1.5.1
 	github.com/liushuangls/go-anthropic/v2 v2.12.2
 	github.com/rodaine/table v1.3.0
