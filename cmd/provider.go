@@ -1,11 +1,13 @@
 package cmd
 
 import (
+	"context"
 	"errors"
 
 	"github.com/appleboy/CodeGPT/core"
-	"github.com/appleboy/CodeGPT/gemini"
-	"github.com/appleboy/CodeGPT/openai"
+	"github.com/appleboy/CodeGPT/provider/anthropic"
+	"github.com/appleboy/CodeGPT/provider/gemini"
+	"github.com/appleboy/CodeGPT/provider/openai"
 
 	"github.com/spf13/viper"
 )
@@ -32,8 +34,9 @@ func NewOpenAI() (*openai.Client, error) {
 }
 
 // NewGemini returns a new Gemini client
-func NewGemini() (*gemini.Client, error) {
+func NewGemini(ctx context.Context) (*gemini.Client, error) {
 	return gemini.New(
+		ctx,
 		gemini.WithToken(viper.GetString("openai.api_key")),
 		gemini.WithModel(viper.GetString("openai.model")),
 		gemini.WithMaxTokens(viper.GetInt32("openai.max_tokens")),
@@ -42,13 +45,35 @@ func NewGemini() (*gemini.Client, error) {
 	)
 }
 
+// NewAnthropic creates a new instance of the anthropic.Client using configuration
+// values retrieved from Viper. The configuration values include the API key,
+// model, maximum tokens, temperature, and top_p.
+//
+// Parameters:
+//   - ctx: The context for the client.
+//
+// Returns:
+//   - A pointer to an anthropic.Client instance.
+//   - An error if the client could not be created.
+func NewAnthropic(ctx context.Context) (*anthropic.Client, error) {
+	return anthropic.New(
+		anthropic.WithAPIKey(viper.GetString("openai.api_key")),
+		anthropic.WithModel(viper.GetString("openai.model")),
+		anthropic.WithMaxTokens(viper.GetInt("openai.max_tokens")),
+		anthropic.WithTemperature(float32(viper.GetFloat64("openai.temperature"))),
+		anthropic.WithTopP(float32(viper.GetFloat64("openai.top_p"))),
+	)
+}
+
 // GetClient returns the generative client based on the platform
-func GetClient(p core.Platform) (core.Generative, error) {
+func GetClient(ctx context.Context, p core.Platform) (core.Generative, error) {
 	switch p {
 	case core.Gemini:
-		return NewGemini()
+		return NewGemini(ctx)
 	case core.OpenAI, core.Azure:
 		return NewOpenAI()
+	case core.Anthropic:
+		return NewAnthropic(ctx)
 	}
 	return nil, errors.New("invalid provider")
 }

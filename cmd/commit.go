@@ -95,7 +95,7 @@ var commitCmd = &cobra.Command{
 
 		// check provider
 		provider := core.Platform(viper.GetString("openai.provider"))
-		client, err := GetClient(provider)
+		client, err := GetClient(cmd.Context(), provider)
 		if err != nil && !promptOnly {
 			return err
 		}
@@ -310,11 +310,13 @@ var commitCmd = &cobra.Command{
 			}
 
 			if change {
-				p := tea.NewProgram(initialPrompt(commitMessage))
+				m := initialPrompt(commitMessage)
+				p := tea.NewProgram(m, tea.WithContext(cmd.Context()))
 				if _, err := p.Run(); err != nil {
 					return err
 				}
 				p.Wait()
+				commitMessage = m.textarea.Value()
 			}
 		}
 
